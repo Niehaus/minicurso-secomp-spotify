@@ -8,7 +8,6 @@ export const useSpotifyTracksStore = defineStore({
     rockSamples: [],
   }),
   getters: {
-    // doubleCount: (state) => state.counter * 2,
     getTracks: (state) => state.tracks,
     getRockSample: (state) => state.rockSamples,
   },

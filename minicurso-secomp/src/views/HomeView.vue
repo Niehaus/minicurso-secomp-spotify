@@ -10,6 +10,6 @@ import RandomTrackRender from "@/components/RandomTrackRender.vue";
     </h1>
   </div>
   <div class="row justify-content-center p-3">
-    <RandomTrackRender></RandomTrackRender>
+    <RouterView />
   </div>
 </template>

@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
+import RandomTrackerView from "../views/RandomTrackerView.vue";
+import SimilarTrackView from "../views/SimilarTrackView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -8,6 +10,19 @@ const router = createRouter({
       path: "/",
       name: "home",
       component: HomeView,
+      children:
+        [
+          {
+            path: "/randomtracker",
+            name: "randomtrackerview",
+            component: RandomTrackerView,
+          },
+          {
+            path: "/similartrack",
+            name: "similartrack",
+            component: SimilarTrackView,
+          },
+        ]
     },
     {
       path: "/about",
@@ -17,6 +32,7 @@ const router = createRouter({
       // which is lazy-loaded when the route is visited.
       component: () => import("../views/AboutView.vue"),
     },
+
   ],
 });
 

@@ -1,3 +1,6 @@
+/* 
+* Objecto que relaciona os atributos a seus respectivos valores de intervalo
+**/
 const maxMinRelation = {
   "popularity": {
     max: 100, min: 0
@@ -43,34 +46,51 @@ const maxMinRelation = {
   },
 }
 
+/* 
+* Normalização dos valores no intervalo 0 a 1
+**/
 const normalize = (val, max, min) => { return (val - min) / (max - min); }
 
-export const normalizeTrack = (track) => {
-  let values = Object.values(track),
-    normalizedValues = [];
+/* 
+* Seleção de atributos númericos das músicas, normaliza-os 
+* e forma um novo array de valores normalizados
+**/
+const normalizeTrack = (track) => {
+  let normalizedValues = [], notNormalizedValues = [];
 
-  console.log({ values })
-
-  values.forEach(value => {
-    if (typeof value == 'number') {
-      normalizedValues.push(normalize(value))
+  for (const [key, value] of Object.entries(track)) {
+    if (typeof value == 'number' && key in maxMinRelation) {
+      const { max, min } = maxMinRelation[key]
+      normalizedValues.push(normalize(value, max, min) > 0.5 ? 1 : 0)
+      notNormalizedValues.push(value)
     }
-  });
-
+  }
+  console.log({ normalizedValues, notNormalizedValues })
   return normalizedValues;
 }
 
-export const cosinesim = (A, B) => {
+/* 
+* Seleção de atributos númericos das músicas, normaliza-os 
+* e forma um novo array de valores normalizados
+**/
+const cosinesim = (A, B) => {
+
+  let norm_A = normalizeTrack(A),
+    norm_B = normalizeTrack(B)
+
   var dotproduct = 0;
   var mA = 0;
   var mB = 0;
-  for (let i = 0; i < A.length; i++) { // here you missed the i++
-    dotproduct += (A[i] * B[i]);
-    mA += (A[i] * A[i]);
-    mB += (B[i] * B[i]);
+  for (let i = 0; i < norm_A.length; i++) {
+    dotproduct += (norm_A[i] * norm_B[i]);
+    mA += (norm_A[i] * norm_A[i]);
+    mB += (norm_B[i] * norm_B[i]);
   }
   mA = Math.sqrt(mA);
   mB = Math.sqrt(mB);
-  var similarity = (dotproduct) / ((mA) * (mB)) // here you needed extra brackets
+  var similarity = (dotproduct) / ((mA) * (mB))
+
   return similarity;
 }
+
+export const similarityBetweenTracks = (t1, t2) => { return cosinesim(t1, t2); }

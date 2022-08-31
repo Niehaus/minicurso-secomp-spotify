@@ -14,8 +14,8 @@ export default {
       <h5 class="card-title">Card title</h5>
       <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
       <p class="card-text">
-        Some quick example text to build on the card title and make up the bulk
-        of the card's content.
+        Some quick example text to build on the card title and make up the bulk of the
+        card's content.
       </p>
       <a href="#" class="card-link">Card link</a>
       <a href="#" class="card-link">Another link</a>
@@ -23,4 +23,10 @@ export default {
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+/* Sinta-se a vontade para mudar as cores e deixar o card do seu jeito :D */
+.card {
+  background-color: aliceblue;
+  border: 2px dotted mediumaquamarine;
+}
+</style>

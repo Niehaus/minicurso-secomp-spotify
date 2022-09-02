@@ -4,7 +4,7 @@ import loadTracks from "./storeUtils";
 export const useSpotifyTracksStore = defineStore({
   id: "spotifyTracks",
   state: () => ({
-    trakcs: [],
+    tracks: [],
     rockSamples: [],
   }),
   getters: {

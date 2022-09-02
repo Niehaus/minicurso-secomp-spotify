@@ -13,6 +13,7 @@ export default {
       selectedTracks: [],
       showCards: false,
       nothingHappend: "Nenhuma ação ocorreu ainda ):",
+      similarity: 0,
     };
   },
   setup() {
@@ -27,8 +28,24 @@ export default {
     });
   },
   methods: {
+    getRandomInt(min, max) {
+      min = Math.ceil(min);
+      max = Math.floor(max);
+      return Math.floor(Math.random() * (max - min)) + min;
+    },
     compareRandomTracks() {
-      console.log("ainda não fui implementado ): ");
+      let len = this.tracks.length;
+
+      let track1 = this.tracks[this.getRandomInt(0, len)];
+      let track2 = this.tracks[this.getRandomInt(0, len)];
+
+      this.similarity = similarityBetweenTracks(track1, track2).toFixed(2);
+
+      console.log({ similaridade: this.similarity });
+      this.selectedTracks.push(track1);
+      this.selectedTracks.push(track2);
+
+      this.showCards = true;
     },
   },
 };
@@ -44,8 +61,15 @@ export default {
       </div>
       <template v-if="showCards">
         <div class="col-lg-10 d-flex align-items-start">
-          <TrackCard v-for="(track, i) in selectedTracks" v-bind:key="i"></TrackCard>
-          <span class="mt-2"> <b>Similaridade:</b> </span>
+          <TrackCard
+            v-for="(track, i) in selectedTracks"
+            v-bind:key="i"
+            :artist_name="track.artist_name"
+            :popularity="track.popularity"
+            :key_note="track.key"
+            :track_name="track.track_name"
+          ></TrackCard>
+          <span class="mt-2"> <b>Similaridade:</b> {{ similarity }} </span>
         </div>
       </template>
       <template v-else>
